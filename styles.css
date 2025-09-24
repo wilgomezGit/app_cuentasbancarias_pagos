@@ -2,12 +2,12 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
-    min-height: 100vh;   /* altura mÌnima de la pantalla */
+    min-height: 100vh;   /* altura m√≠nima de la pantalla */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* footer abajo */
     align-items: center; /* centrar contenido */
-    background-image: url('imagen/fondo.jpg'); 
+    background-image: url('./imagen/fondo.jpg'); 
     background-repeat: repeat;
     overflow-x: hidden; /* evita scroll horizontal */
 }
@@ -16,7 +16,7 @@ body {
 .container {
     text-align: center;
     width: 100%;
-    margin-top: 40px; /* sube un poco el men˙ */
+    margin-top: 40px; /* sube un poco el men√∫ */
 }
 
 /* Caja del contenido */
@@ -26,7 +26,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     border: 2px solid #ddd;
-    max-width: 900px; /* m·s angosto */
+    max-width: 900px; /* m√°s angosto */
     margin: 0 auto;
     padding-bottom: 30px;
 }
@@ -46,19 +46,19 @@ h1 {
     gap: 15px; 
 }
 
-/* Botones m·s pequeÒos */
+/* Botones m√°s peque√±os */
 .button {
     display: flex;
     justify-content: center;  
     align-items: center;      
     text-align: center;       
     width: 100%;              
-    max-width: 190px; /* botones m·s pequeÒos */
+    max-width: 190px; /* botones m√°s peque√±os */
     padding: 12px;
     background-color: #3498db;
     color: white;
     text-decoration: none;
-    font-size: 16px; /* texto m·s pequeÒo */
+    font-size: 16px; /* texto m√°s peque√±o */
     border-radius: 5px;
     transition: transform 0.2s ease, opacity 0.5s ease;
     box-sizing: border-box;   
@@ -70,7 +70,7 @@ h1 {
     transform: translateY(-4px);
 }
 
-/* ====== Pie de p·gina ====== */
+/* ====== Pie de p√°gina ====== */
 footer {
     background-color: #f1f1f1;
     padding: 10px;
@@ -82,7 +82,7 @@ footer {
     margin-top: auto; /* empuja hacia abajo */
 }
 
-/* LÌnea de separaciÛn degradada azul */
+/* L√≠nea de separaci√≥n degradada azul */
 footer::before {
     content: "";
     display: block;
@@ -102,3 +102,4 @@ footer p {
     margin: 0;
     color: #333;
 }
+
