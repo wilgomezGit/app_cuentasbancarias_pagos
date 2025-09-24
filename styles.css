@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     justify-content: space-between; /* footer abajo */
     align-items: center; /* centrar contenido */
-    background-image: url('./imagen/fondo.jpg'); 
+    background-image: url('./imagen/fondo.JPG'); 
     background-repeat: repeat;
     overflow-x: hidden; /* evita scroll horizontal */
 }
@@ -102,4 +102,5 @@ footer p {
     margin: 0;
     color: #333;
 }
+
 
