@@ -29,37 +29,69 @@ document.getElementById('clearButton').addEventListener('click', function() {
     document.getElementById('fileInput').value = '';
     document.getElementById('output').textContent = '';
     document.getElementById('fileName').textContent = '';
-    document.getElementById('validationMessage').textContent = ''; // Borra el mensaje de validación
+    document.getElementById('validationMessage').textContent = '';
     fileContent = '';
     document.getElementById('processButton').disabled = true;
 });
 
 function validateFileContent(content) {
-    const lines = content.split('\n');
-    const specialCharactersRegex = /[^a-zA-Z0-9\s\-:]/; // Permite letras, números, espacios, "-" y ":"
+    const lines = content.split(/\r\n|\n/);
+
+    // ✅ Solo permite: letras, números, espacios, ñÑ, -, /, \ y :
+    const allowedRegex = /^[a-zA-Z0-9ñÑ\s\/\\:\-]+$/;
+
     let output = '';
     let hasErrors = false;
 
     lines.forEach((line, index) => {
         const lineNumber = index + 1;
-        if (specialCharactersRegex.test(line)) {
+
+        if (line.length === 0) {
+            return; // aceptar línea vacía
+        }
+
+        if (!allowedRegex.test(line)) {
             hasErrors = true;
-            output += `<span class="highlight">Línea ${lineNumber}:</span> ${line}\n`;
+            // buscar y mostrar exactamente qué caracteres son inválidos
+            const invalidChars = [...line].filter(ch => !allowedRegex.test(ch));
+            const invalidDesc = invalidChars.map(ch => `"${describeChar(ch)}"`).join(', ');
+
+            output += `<div><span class="highlight">Línea ${lineNumber}:</span> "${escapeHtml(line)}" → ❌ Caracteres inválidos: ${invalidDesc}</div>`;
         }
     });
 
-    document.getElementById('output').innerHTML = output;
+    document.getElementById('output').innerHTML = output || '<small>✅ No se encontraron caracteres inválidos.</small>';
 
-    // Muestra el mensaje de validación arriba
     if (hasErrors) {
-        document.getElementById('validationMessage').textContent = '⚠️ Se encontraron errores en el archivo. ¡Revísalos y corrígelos antes de continuar!';
+        document.getElementById('validationMessage').textContent = '⚠️ Se encontraron errores en el archivo. Corrige los caracteres inválidos antes de continuar.';
         document.getElementById('validationMessage').style.color = 'red';
     } else {
-        document.getElementById('validationMessage').textContent = '✅ Archivo correcto. ¡Puedo cargarlo en BANCOLOMBIA!';
+        document.getElementById('validationMessage').textContent = '✅ Archivo correcto. ¡Listo para cargar en BANCOLOMBIA!';
         document.getElementById('validationMessage').style.color = 'green';
     }
 }
 
+// Escapa HTML para evitar inyección en el output
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Devuelve descripción legible del carácter
+function describeChar(ch) {
+    if (ch === ' ') return 'espacio';
+    if (ch === '\t') return 'tabulación';
+    if (ch === '\r') return 'retorno de carro';
+    const code = ch.charCodeAt(0);
+    const printable = escapeHtml(ch);
+    if (printable.trim() !== '') return printable;
+    return `U+${code.toString(16).toUpperCase()}`;
+}
+
 function goToHome() {
-    window.location.href = "../index.html"; // Cambia "index.html" por la ruta de la página principal
+    window.location.href = "../index.html";
 }
