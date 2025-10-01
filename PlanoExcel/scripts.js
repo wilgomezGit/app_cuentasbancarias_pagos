@@ -123,7 +123,10 @@ function mapBanco(codigo) {
         "005895142": "BANCO DAVIVIENDA SA",
         "006013677": "BANCO AV VILLAS",
         "000001047": "BANCO MUNDO MUJER",
-        "1809": "NU BANK"
+        "000001811": "RAPPIPAY",
+        "000001506": "PIBANK",
+        "000001070": "LULO BANK",
+        "000001809": "NU BANK"
     };
 
     return bancoMap[codigo] || "DESCONOCIDO";
@@ -188,3 +191,4 @@ function clearData() {
 function goToHome() {
     window.location.href = "../index.html";
 }
+
