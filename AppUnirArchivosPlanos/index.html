@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unir Archivos de Texto</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<!-- Botón para ir a la página principal -->
+		<button id="homeButton" class="btn btn-home" onclick="goToHome()">&laquo Pagina Inicio</button>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="container">
+        <h1>Unir Archivos de Texto</h1>
+
+        <!-- SECCIÓN CARGA -->
+        <div class="upload-section">
+            <label class="file-label">
+                📂 Elegir archivos
+                <input type="file" id="fileInput" multiple accept=".txt">
+            </label>
+            <div class="file-name" id="fileCount">
+                No hay archivos seleccionados
+            </div>
+        </div>
+
+        <!-- BOTÓN -->
+        <div class="buttons">
+		    <button id="combineButton" disabled>
+		        Unir Archivos
+		    </button>
+
+		    <button id="clearButton">
+		        Limpiar Todo
+		    </button>
+		</div>
+
+
+        <!-- RESULTADOS -->
+        <div class="result-section">
+            <a id="downloadLink" class="download-link" style="display: none;">
+                ⬇ Descargar Archivo Unificado
+            </a>
+
+            <ul id="fileList" class="file-list"></ul>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <p>Copyright © | Popayán 2025</p>
+            <p>Tesorería Comfacauca</p>
+            <p class="signature">Desarrollo: Wilmar Andrés Gómez</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+</body>
+</html>
