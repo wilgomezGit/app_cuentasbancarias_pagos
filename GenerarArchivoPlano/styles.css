@@ -148,7 +148,7 @@ tr:hover {
     background-color: #dff0d8;
 }
 
-/* Botón volver al inicio */
+/* BotÃ³n volver al inicio */
 .btn-home {
     background-color: #4CAF50;
     color: white;
@@ -181,7 +181,7 @@ footer {
     margin-top: auto; /* empuja hacia abajo */
 }
 
-/* Línea de separación degradada azul */
+/* LÃ­nea de separaciÃ³n degradada azul */
 footer::before {
     content: "";
     display: block;
