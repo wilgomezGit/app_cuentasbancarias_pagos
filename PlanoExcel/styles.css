@@ -34,25 +34,56 @@ h1 {
     align-items: center;
 }
 
-/* Contenedor de carga del archivo */
-.file-container {
+/* ==========================
+   SECCIÃ“N CARGA DE ARCHIVOS
+   ========================== */
+.upload-section {
+    width: 40%;
+    background: #f8f9fa;
+    border: 2px dashed #3498db;
+    border-radius: 10px;
+    padding: 25px;
     text-align: center;
-    margin-bottom: 20px; /* Espacio entre input y botones */
+    margin-bottom: 25px;
 }
 
-/* Input de archivo */
-.file-input {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
+.file-label {
+    display: inline-block;
+    background: #3498db;
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s;
 }
 
-/* Botones */
+.file-label:hover {
+    background: #2c80b4;
+}
+
+.file-label input {
+    display: none;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+
+/* ==========================
+   BOTONES
+========================== */
+
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espaciado entre los botones */
-    margin-bottom: 20px; /* Espacio entre los botones y la tabla */
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 button {
@@ -63,15 +94,20 @@ button {
     cursor: pointer;
     color: white;
     width: 160px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
+/* Estado deshabilitado */
 button:disabled {
-    background-color: #CCCCCC;
+    background-color: #CCCCCC !important;
     cursor: not-allowed;
 }
 
-button#processButton {
+/* ==========================
+   COLORES INDIVIDUALES
+========================== */
+
+button#acceptButton {
     background-color: #28a745;
 }
 
@@ -83,17 +119,25 @@ button#cancelButton {
     background-color: #dc3545;
 }
 
-button:hover:not(:disabled) {
+/* ==========================
+   HOVER INDIVIDUAL
+========================== */
+
+button#acceptButton:hover:not(:disabled) {
     background-color: #218838;
+    transform: translateY(-2px);
 }
 
 button#exportButton:hover:not(:disabled) {
     background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 button#cancelButton:hover:not(:disabled) {
     background-color: #c82333;
+    transform: translateY(-2px);
 }
+
 
 /* Tabla */
 .table-container {
@@ -147,7 +191,7 @@ tr:hover {
     margin-bottom: 10px;
     position: absolute;
     left: 20px; /* Alineado a la izquierda */
-    top: 20px; /* Ajusta la posición según necesites */
+    top: 20px; /* Ajusta la posiciÃ³n segÃºn necesites */
     display: flex;
     align-items: center;
     gap: 5px; /* Espacio entre la flecha y el texto */
@@ -168,7 +212,7 @@ footer {
     margin-top: auto; /* empuja hacia abajo */
 }
 
-/* Línea de separación degradada azul */
+/* LÃ­nea de separaciÃ³n degradada azul */
 footer::before {
     content: "";
     display: block;
