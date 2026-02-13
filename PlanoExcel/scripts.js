@@ -1,7 +1,11 @@
-let parsedData = []; // Para almacenar los datos procesados
-let hasErrors = false; // Variable para verificar si hay errores
+let parsedData = [];
+let hasErrors = false;
 
+/* =========================
+   PROCESAR ARCHIVO
+========================= */
 function processFile() {
+
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
 
@@ -11,32 +15,46 @@ function processFile() {
     }
 
     const reader = new FileReader();
+
     reader.onload = function (e) {
         const content = e.target.result;
         parseFile(content);
     };
+
     reader.readAsText(file);
 }
 
-// Modificamos `parseFile` para habilitar el botón cancelar si hay datos
+
+/* =========================
+   PARSEAR ARCHIVO
+========================= */
 function parseFile(content) {
+
     const rows = content.split('\n');
     const tableBody = document.getElementById('dataBody');
+    const exportButton = document.getElementById('exportButton');
+    const cancelButton = document.getElementById('cancelButton');
+
     tableBody.innerHTML = '';
 
     parsedData = [];
-    hasErrors = false; // Reiniciamos la variable de errores
+    hasErrors = false;
 
     rows.forEach((line, index) => {
+
         const columns = line.split(',');
 
         if (columns.length >= 6) {
+
             const tipoCuenta = mapTipoCuenta(columns[1].trim());
             const banco = mapBanco(columns[3].trim());
             const tipoDocumento = mapTipoDocumento(columns[5].trim());
 
-            // Verificamos si hay errores en los datos
-            if (tipoCuenta === "ERROR" || banco === "DESCONOCIDO" || tipoDocumento === "TIPO DESCONOCIDO") {
+            if (
+                tipoCuenta === "ERROR" ||
+                banco === "DESCONOCIDO" ||
+                tipoDocumento === "TIPO DESCONOCIDO"
+            ) {
                 hasErrors = true;
             }
 
@@ -62,6 +80,7 @@ function parseFile(content) {
                 <td>${rowData.tipoCuenta}</td>
                 <td>${rowData.tipoDocumento}</td>
             `;
+
             tableBody.appendChild(tr);
         }
     });
@@ -70,24 +89,28 @@ function parseFile(content) {
         alert("⚠️ Verifica los datos porque hay errores en algunas filas.");
     }
 
-    // Habilita los botones solo si no hay errores
-    document.getElementById('exportButton').disabled = hasErrors || parsedData.length === 0;
-    document.getElementById('cancelButton').disabled = parsedData.length === 0;
+    exportButton.disabled = hasErrors || parsedData.length === 0;
+    cancelButton.disabled = parsedData.length === 0;
 }
 
-// Función para mapear el tipo de cuenta
+
+/* =========================
+   MAPEO TIPO CUENTA
+========================= */
 function mapTipoCuenta(tipo) {
-    if (tipo === '7') {
-        return 'AHORROS';
-    } else if (tipo === '1') {
-        return 'CORRIENTE';
-    } else {
-        return 'ERROR';
-    }
+
+    if (tipo === '7') return 'AHORROS';
+    if (tipo === '1') return 'CORRIENTE';
+
+    return 'ERROR';
 }
 
-// Función para mapear el banco según el código
+
+/* =========================
+   MAPEO BANCOS
+========================= */
 function mapBanco(codigo) {
+
     const bancoMap = {
         "000001014": "ITAU",
         "000001031": "BANCOLDEX S.A.",
@@ -134,8 +157,12 @@ function mapBanco(codigo) {
     return bancoMap[codigo] || "DESCONOCIDO";
 }
 
-// Función para mapear el tipo de documento según el código
+
+/* =========================
+   MAPEO TIPO DOCUMENTO
+========================= */
 function mapTipoDocumento(tipo) {
+
     const tipoDocumentoMap = {
         "1": "CÉDULA CIUDADANÍA",
         "2": "CÉDULA EXTRANJERÍA",
@@ -147,9 +174,14 @@ function mapTipoDocumento(tipo) {
     return tipoDocumentoMap[tipo] || "TIPO DESCONOCIDO";
 }
 
+
+/* =========================
+   EXPORTAR A EXCEL
+========================= */
 function exportToExcel() {
+
     if (hasErrors) {
-        alert("⚠️ No puedes exportar los datos porque hay errores.");
+        alert("⚠️ No puedes exportar porque hay errores.");
         return;
     }
 
@@ -180,18 +212,67 @@ function exportToExcel() {
     saveAs(blob, 'DatosCuentasBancarias.xlsx');
 }
 
+
+/* =========================
+   LIMPIAR TODO
+========================= */
 function clearData() {
+
+    const fileInput = document.getElementById('fileInput');
+    const fileCount = document.getElementById('fileCount');
+    const acceptButton = document.getElementById('acceptButton');
+    const cancelButton = document.getElementById('cancelButton');
+    const exportButton = document.getElementById('exportButton');
+
     document.getElementById('dataBody').innerHTML = '';
-    document.getElementById('fileInput').value = '';
+
+    fileInput.value = '';
+    fileCount.textContent = "No hay archivos seleccionados";
+
     parsedData = [];
     hasErrors = false;
 
-    document.getElementById('exportButton').disabled = true;
-    document.getElementById('cancelButton').disabled = true;
+    acceptButton.disabled = true;
+    cancelButton.disabled = true;
+    exportButton.disabled = true;
 }
 
+
+/* =========================
+   VOLVER AL INICIO
+========================= */
 function goToHome() {
     window.location.href = "../index.html";
 }
 
 
+/* =========================
+   INICIALIZACIÓN
+========================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const fileInput = document.getElementById('fileInput');
+    const fileCount = document.getElementById('fileCount');
+    const acceptButton = document.getElementById('acceptButton');
+    const cancelButton = document.getElementById('cancelButton');
+
+    acceptButton.disabled = true;
+    cancelButton.disabled = true;
+
+    fileInput.addEventListener('change', function () {
+
+        if (this.files.length > 0) {
+
+            fileCount.textContent = this.files[0].name;
+            acceptButton.disabled = false;
+            cancelButton.disabled = false;
+
+        } else {
+
+            fileCount.textContent = "No hay archivos seleccionados";
+            acceptButton.disabled = true;
+            cancelButton.disabled = true;
+        }
+    });
+
+});
