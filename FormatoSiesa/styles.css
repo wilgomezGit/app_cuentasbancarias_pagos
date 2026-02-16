@@ -1,4 +1,7 @@
-/* Estilos Generales */
+/* ==========================
+   ESTILOS GENERALES
+   ========================== */
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -8,9 +11,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-image: url('imagen/fondo.jpg'); /* Cambia esto a la ruta de tu imagen */
-    background-repeat: repeat; /* Repite la imagen en mosaico */
-
+    background-image: url('imagen/fondo.jpg');
+    background-repeat: repeat;
 }
 
 h1 {
@@ -20,13 +22,16 @@ h1 {
     font-size: 22px;
 }
 
-/* Contenedor principal */
+/* ==========================
+   CONTENEDOR PRINCIPAL
+   ========================== */
+
 .container {
     width: 100%;
     max-width: 1300px;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     padding: 20px;
     margin-bottom: 20px;
     display: flex;
@@ -34,68 +39,125 @@ h1 {
     align-items: center;
 }
 
-/* Contenedor de carga del archivo */
+/* ==========================
+   SECCIÓN ARCHIVO
+   ========================== */
+
 .file-container {
+    width: 40%;
+    background: #f8f9fa;
+    border: 2px dashed #3498db;
+    border-radius: 10px;
+    padding: 25px;
     text-align: center;
-    margin-bottom: 20px; /* Espacio entre input y botones */
+    margin-bottom: 25px;
 }
 
-/* Input de archivo */
-.file-input {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
+.file-label {
+    display: inline-block;
+    background: #3498db;
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s;
 }
 
-/* Botones */
+.file-label:hover {
+    background: #2c80b4;
+}
+
+.file-label input {
+    display: none;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+/* ==========================
+   BOTONES MODERNOS
+   ========================== */
+
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espaciado entre los botones */
-    margin-bottom: 20px; /* Espacio entre los botones y la tabla */
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 button {
     padding: 10px 20px;
     font-size: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     color: white;
-    width: 160px;
-    transition: background-color 0.3s;
+    width: 170px;
+    transition: all 0.25s ease;
+    transform: scale(1);
 }
 
-button:disabled {
-    background-color: #CCCCCC;
-    cursor: not-allowed;
+/* EFECTO SALTO */
+button:hover:not(:disabled) {
+    transform: scale(1.08);
 }
 
-button#processButton {
+/* EFECTO CLICK */
+button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+/* ===== ACEPTAR ===== */
+#processButton {
     background-color: #28a745;
 }
 
-button#exportButton {
-    background-color: #007BFF;
-}
-
-button#cancelButton {
-    background-color: #dc3545;
-}
-
-button:hover:not(:disabled) {
+#processButton:hover:not(:disabled) {
     background-color: #218838;
 }
 
-button#exportButton:hover:not(:disabled) {
-    background-color: #0056b3;
+/* ===== EXPORTAR NORMAL ===== */
+#exportButton {
+    background-color: #007BFF;
 }
 
-button#cancelButton:hover:not(:disabled) {
+/* ===== EXPORTAR ACTIVO AZUL ILUMINADO ===== */
+.active-export {
+    background: linear-gradient(135deg, #007bff, #00c6ff) !important;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+.active-export:hover {
+    box-shadow: 0 0 25px rgba(0, 123, 255, 1);
+}
+
+/* ===== CANCELAR ===== */
+#cancelButton {
+    background-color: #dc3545;
+}
+
+#cancelButton:hover:not(:disabled) {
     background-color: #c82333;
 }
 
-/* Tabla */
+/* ===== BOTÓN DESHABILITADO ===== */
+button:disabled {
+    background-color: #CCCCCC !important;
+    cursor: not-allowed;
+    transform: scale(1);
+    box-shadow: none;
+}
+
+/* ==========================
+   TABLA
+   ========================== */
+
 .table-container {
     width: 100%;
     overflow-x: auto;
@@ -134,28 +196,35 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #dff0d8;
+    background-color: #e3f2fd;
 }
 
+/* ==========================
+   BOTÓN INICIO
+   ========================== */
+
 .btn-home {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 14px;
     position: absolute;
-    left: 20px; /* Alineado a la izquierda */
-    top: 20px; /* Ajusta la posición según necesites */
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Espacio entre la flecha y el texto */
+    left: 20px;
+    top: 20px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
 }
 
 .btn-home:hover {
     background-color: #45a049;
+    transform: scale(1.08);
 }
+
+/* ==========================
+   FOOTER
+   ========================== */
 
 footer {
     background-color: #f1f1f1;
@@ -165,10 +234,9 @@ footer {
     font-size: 13px;
     font-style: italic;
     position: relative;
-    margin-top: auto; /* empuja hacia abajo */
+    margin-top: auto;
 }
 
-/* Línea de separación degradada azul */
 footer::before {
     content: "";
     display: block;
