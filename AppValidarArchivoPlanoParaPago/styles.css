@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-image: url('imagen/fondo.jpg'); /* Ajusta según sea necesario */
+    background-image: url('imagen/fondo.jpg'); /* Ajusta segÃºn sea necesario */
     background-repeat: repeat;
 }
 
@@ -34,16 +34,53 @@ h1 {
 }
 
 /* Contenedor de carga del archivo */
+/* ==========================
+   SECCIÃ“N ARCHIVO MODERNA
+   ========================== */
+
 .file-container {
+    width: 50%;
+    background: #f8f9fa;
+    border: 2px dashed #3498db;
+    border-radius: 12px;
+    padding: 30px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
 }
 
-.file-input {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
+.file-container:hover {
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.4);
 }
+
+.file-label {
+    display: inline-block;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+}
+
+.file-label input {
+    display: none;
+}
+
+.file-name {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
 
 .file-name {
     margin-top: 10px;
@@ -116,7 +153,7 @@ button:hover:not(:disabled) {
     margin-bottom: 8px;
 }
 
-/* Botón de regreso */
+/* BotÃ³n de regreso */
 .btn-home {
     background-color: #4CAF50;
     color: white;
@@ -137,7 +174,7 @@ button:hover:not(:disabled) {
     background-color: #45a049;
 }
 
-/* Mensajes de validación */
+/* Mensajes de validaciÃ³n */
 #validationMessage, .success-message, .error-message {
     font-weight: bold;
     font-size: 16px;
@@ -170,7 +207,7 @@ footer {
     margin-top: auto; /* empuja hacia abajo */
 }
 
-/* Línea de separación degradada azul */
+/* LÃ­nea de separaciÃ³n degradada azul */
 footer::before {
     content: "";
     display: block;
