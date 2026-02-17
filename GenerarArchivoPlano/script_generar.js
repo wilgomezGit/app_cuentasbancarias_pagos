@@ -1,198 +1,239 @@
-let datosExcel = [];
-
-// --------- BOTÓN PROCESAR ---------
-document.getElementById("btnProcesar").addEventListener("click", () => {
-  const input = document.getElementById("inputExcel");
-  if (!input.files.length) {
-    alert("Por favor selecciona un archivo Excel.");
-    return;
-  }
-
-  const file = input.files[0];
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: "array" });
-
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-
-    datosExcel = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-
-    // Obtener encabezados del Excel
-    const range = XLSX.utils.decode_range(worksheet["!ref"]);
-    let headers = [];
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      let cell = worksheet[XLSX.utils.encode_cell({ r: range.s.r, c: C })];
-      headers.push(cell ? cell.v : `Columna ${C}`);
-    }
-
-    mostrarTabla(datosExcel, headers);
-
-    // Habilitar botones
-    document.getElementById("btnDescargar").disabled = false;
-    document.getElementById("btnCancelar").disabled = false;
-  };
-
-  reader.readAsArrayBuffer(file);
-});
-
-// --------- FUNCIÓN MOSTRAR TABLA ---------
-function mostrarTabla(datos, headers) {
-  const container = document.getElementById("tabla-container");
-  container.innerHTML = "";
-
-  if (!datos.length) {
-    container.innerHTML = "<p>No se encontraron datos en el Excel.</p>";
-    return;
-  }
-
-  const table = document.createElement("table");
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
-
-  // Encabezados
-  const headerRow = document.createElement("tr");
-  headers.forEach((header) => {
-    const th = document.createElement("th");
-    th.textContent = header;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  // Filas
-  datos.forEach((row) => {
-    const tr = document.createElement("tr");
-    headers.forEach((header) => {
-      const td = document.createElement("td");
-      td.textContent = row[header] !== undefined ? row[header] : "";
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.appendChild(table);
+/* Estilos Generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 30px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-image: url('../imagen/fondo.jpg'); /* Ajusta la ruta */
+    background-repeat: repeat;
 }
 
-// --------- BOTÓN DESCARGAR ---------
-document.getElementById("btnDescargar").addEventListener("click", () => {
-  if (!datosExcel || datosExcel.length === 0) {
-    alert("Primero procesa el Excel.");
-    return;
-  }
-
-  const plano = generarPlano(datosExcel);
-  const blob = new Blob([plano], { type: "text/plain;charset=utf-8" });
-  const enlace = document.createElement("a");
-  enlace.href = URL.createObjectURL(blob);
-  enlace.download = "153101H7M48erpfinanciero@comfacauca.com.txt";
-  enlace.click();
-});
-
-// --------- BOTÓN CANCELAR ---------
-document.getElementById("btnCancelar").addEventListener("click", clearData);
-
-function clearData() {
-  datosExcel = [];
-
-  document.getElementById("inputExcel").value = "";
-  document.getElementById("tabla-container").innerHTML = "";
-  document.getElementById("fileName").textContent = "No hay archivos seleccionados";
-
-  document.getElementById("btnDescargar").disabled = true;
-  document.getElementById("btnCancelar").disabled = true;
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 22px;
 }
 
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 25px;
+    color: #444;
+}
 
-document.getElementById("inputExcel").addEventListener("change", function () {
-    const fileNameDiv = document.getElementById("fileName");
+/* Contenedor principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    if (this.files.length > 0) {
-        fileNameDiv.textContent = this.files[0].name;
-    } else {
-        fileNameDiv.textContent = "No hay archivos seleccionados";
-    }
-});
+/* ==========================
+   SECCIÓN ARCHIVO MODERNA
+   ========================== */
 
+.file-container {
+    width: 40%;
+    background: #f8f9fa;
+    border: 2px dashed #3498db;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-// --------- GENERADOR DEL ARCHIVO PLANO ---------
-function generarPlano(datosExcel) {
-  let lineas = [];
+.file-label {
+    display: inline-block;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
 
-  // Primera línea fija
-  lineas.push("000000100000001001");
+.file-label:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+}
 
-  datosExcel.forEach((row, index) => {
-    let consecutivo = (index + 2).toString();
-    let linea = consecutivo.padStart(7, "0"); // consecutivo de 7 dígitos
-    linea += "0"; // cero fijo
-    linea += "63400020011"; // bloque fijo
+.file-label input {
+    display: none;
+}
 
-    // Código proveedor
-    linea += row["Código del proveedor"] || "";
+.file-name {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
 
-    // Espacios hasta pos 35
-    linea = linea.padEnd(34, " ");
+.file-input {
+    display: block;
+    margin-top: 10px;
+    padding: 10px;
+}
 
-    // Sucursal + "1" + Banco
-    linea += (row["Sucursal del proveedor"] || "");
-    linea += "1";
-    linea += (row["Banco del proveedor"] || "");
+/* Botones */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-    // 8 espacios
-    linea += " ".repeat(8);
+button {
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    width: 180px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
 
-    // Número de cuenta
-    linea += row["Número de cuenta corriente o de ahorros"] || "";
+/* Estado deshabilitado */
+button:disabled {
+    background-color: #CCCCCC;
+    cursor: not-allowed;
+}
 
-    // Hasta pos 79
-    linea = linea.padEnd(78, " ");
+/* Botones individuales */
+#btnProcesar {
+    background-color: #28a745;
+}
 
-    // Tipo cuenta + formato + forma de pago + cuenta por defecto
-    linea += row["Tipo de cuenta 1=cta cte 2=cta ahorro"] || "";
-    linea += row["formato"] || "";
-    linea += row["forma de pago"] || "";
-    linea += row["Cuenta por defecto 0= cta reg. no es default, 1=cta reg. es default"] || "";
+#btnDescargar {
+    background-color: #007BFF;
+}
 
-    // fijo "1"
-    linea += "1";
+#btnCancelar {
+    background-color: #dc3545;
+}
 
-    // DATO 1
-    linea += row["DATO 1"] || "";
+/* Hover efecto salto */
+button:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
 
-    // Hasta pos 141
-    linea = linea.padEnd(140, " ");
-    linea += row["DATO 2"] || "";
+#btnProcesar:hover:not(:disabled) {
+    background-color: #218838;
+}
 
-    // Hasta pos 191
-    linea = linea.padEnd(190, " ");
-    linea += row["DATO 3"] || "";
+#btnDescargar:hover:not(:disabled) {
+    background-color: #0056b3;
+}
 
-    // Hasta pos 241
-    linea = linea.padEnd(240, " ");
-    linea += row["DATO 4"] || "";
+#btnCancelar:hover:not(:disabled) {
+    background-color: #c82333;
+}
 
-    // Hasta pos 341 con ceros
-    while (linea.length < 340) linea += " ";
-    linea += row["DATO 6"] || "";
+/* Tabla */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+}
 
-    // Hasta pos 441
-    linea = linea.padEnd(440, " ");
-    linea += row["DATO 8"] || "";
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
 
-    // Hasta pos 841
-    linea = linea.padEnd(840, " ");
+th {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    padding: 6px;
+}
 
-    lineas.push(linea);
-  });
+td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-  // Última línea
-  let ultimoConsec = (datosExcel.length + 2).toString().padStart(7, "0");
-  let ultimaLinea = ultimoConsec + "99990001001";
-  lineas.push(ultimaLinea);
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-  return lineas.join("\n");
+tr:hover {
+    background-color: #dff0d8;
+}
+
+/* Botón volver al inicio */
+.btn-home {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-home:hover {
+    background-color: #45a049;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+    font-style: italic;
+    position: relative;
+    margin-top: auto; /* empuja hacia abajo */
+}
+
+/* Línea de separación degradada azul */
+footer::before {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(to right, transparent, #3498db, #00b8d9, transparent);
+    margin-bottom: 6px;
+    border-radius: 2px;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+footer p {
+    margin: 0;
+    color: #333;
 }
