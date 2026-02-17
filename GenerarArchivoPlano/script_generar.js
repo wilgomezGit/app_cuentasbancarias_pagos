@@ -93,13 +93,30 @@ document.getElementById("btnDescargar").addEventListener("click", () => {
 });
 
 // --------- BOTÓN CANCELAR ---------
+document.getElementById("btnCancelar").addEventListener("click", clearData);
+
 function clearData() {
   datosExcel = [];
+
   document.getElementById("inputExcel").value = "";
   document.getElementById("tabla-container").innerHTML = "";
+  document.getElementById("fileName").textContent = "No hay archivos seleccionados";
+
   document.getElementById("btnDescargar").disabled = true;
   document.getElementById("btnCancelar").disabled = true;
 }
+
+
+document.getElementById("inputExcel").addEventListener("change", function () {
+    const fileNameDiv = document.getElementById("fileName");
+
+    if (this.files.length > 0) {
+        fileNameDiv.textContent = this.files[0].name;
+    } else {
+        fileNameDiv.textContent = "No hay archivos seleccionados";
+    }
+});
+
 
 // --------- GENERADOR DEL ARCHIVO PLANO ---------
 function generarPlano(datosExcel) {
