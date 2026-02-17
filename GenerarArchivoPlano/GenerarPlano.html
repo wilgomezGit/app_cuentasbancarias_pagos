@@ -13,11 +13,16 @@
 
         <h1>GENERAR ARCHIVO PLANO PARA INSCRIPCIÓN DE CUENTAS</h1>
 
-        <!-- Sección de carga del archivo -->
         <div class="file-container">
-            <label for="inputExcel">Selecciona el archivo Excel Formato SIESA:</label>
-            <input type="file" id="inputExcel" class="file-input" accept=".xlsx,.xls">
-        </div>
+		    <label class="file-label">
+		        📂 Elegir archivo
+		        <input type="file" id="inputExcel" accept=".xlsx,.xls">
+		    </label>
+
+		    <div class="file-name" id="fileName">
+		        No hay archivos seleccionados
+		    </div>
+		</div>
 
         <!-- Botones -->
         <div class="buttons">
