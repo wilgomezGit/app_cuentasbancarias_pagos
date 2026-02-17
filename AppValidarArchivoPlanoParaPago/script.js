@@ -28,7 +28,7 @@ document.getElementById('processButton').addEventListener('click', function() {
 document.getElementById('clearButton').addEventListener('click', function() {
     document.getElementById('fileInput').value = '';
     document.getElementById('output').textContent = '';
-    document.getElementById('fileName').textContent = '';
+    document.getElementById('fileName').textContent = 'No hay archivos seleccionados';
     document.getElementById('validationMessage').textContent = '';
     fileContent = '';
     document.getElementById('processButton').disabled = true;
