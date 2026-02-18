@@ -48,10 +48,16 @@ const bancoData = {
     'BANCO PICHINCHA': { banco: '64', dato3: '000001060' },
     'BANCO W S.A.': { banco: '65', dato3: '000001053' },
     'BANCO COOPERATIVO COOPCENTRAL': { banco: '66', dato3: '000001066' },
+    'COOMEVA': { banco: '1810', dato3: '000001810' },
     'BANCO SERFINANZA': { banco: '68', dato3: '000001069' },
     'DAVIPLATA': { banco: '69', dato3: '000001551' },
     'BANCO FINANDINA S.A.': { banco: '71', dato3: '000001063' },
     'LULO BANK': { banco: '1070', dato3: '000001070' },
+    'RAPPIPAY': { banco: '1811', dato3: '000001811' },
+    'BOLD CF': { banco: '1808', dato3: '000001808' },
+    'GLOBAL66': { banco: '1814', dato3: '000001814' },
+    'PIBANK': { banco: '1560', dato3: '000001560' },
+    'BANCO CONTACTAR SA': { banco: '1819', dato3: '000001819' },
     'NU BANK': { banco: '1809', dato3: '000001809' }
 };
 
@@ -206,3 +212,4 @@ function cancelProcess() {
 function goToHome() {
     window.location.href = "../index.html";
 }
+
