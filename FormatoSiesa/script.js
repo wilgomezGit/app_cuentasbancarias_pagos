@@ -58,8 +58,6 @@ const bancoData = {
     'GLOBAL66': { banco: '1814', dato3: '000001814' },
     'PIBANK': { banco: '1560', dato3: '000001560' },
     'BANCO CONTACTAR SA': { banco: '1819', dato3: '000001819' },
-    'ITAU antes Corpbanca': { banco: '06', dato3: '000000006' },
-    'BANCO MUNDO MUJER': { banco: '1047', dato3: '000001047' },
     'NU BANK': { banco: '1809', dato3: '000001809' }
 };
 
@@ -214,5 +212,6 @@ function cancelProcess() {
 function goToHome() {
     window.location.href = "../index.html";
 }
+
 
 
